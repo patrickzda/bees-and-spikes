@@ -36,13 +36,13 @@ class _MainPageState extends State<MainPage> {
             currentScreen = Screen.game;
             gameOver = false;
           });
-        }else if(currentScreen == Screen.game && !gameOver && selectedLevel <= levels.length){
+        }else if(currentScreen == Screen.game && !gameOver && selectedLevel < levels.length){
           selectedLevel++;
           setState(() {
             currentScreen = Screen.game;
             gameOver = false;
           });
-        }else if(currentScreen == Screen.game && !gameOver && selectedLevel > levels.length){
+        }else if(currentScreen == Screen.game && !gameOver && selectedLevel >= levels.length){
           selectedLevel = 1;
           setState(() {
             currentScreen = Screen.menu;
@@ -156,7 +156,7 @@ class _MainPageState extends State<MainPage> {
                               cursor: SystemMouseCursors.click,
                               child: GestureDetector(
                                 onTap: (){
-                                  if(selectedLevel < 5){
+                                  if(selectedLevel < levels.length){
                                     setState(() {
                                       selectedLevel++;
                                     });
@@ -198,15 +198,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ) : currentScreen == Screen.game ? GameWidget(
           game: MainGame(
-            level: Level(
-              data: [
-                ["E", "D", "E", "F", "E"],
-                ["E", "W", "L", "E", "E"],
-                ["E", "W", "E", "D", "E"],
-                ["E", "W", "+1", "E", "E"],
-                ["E", "B", "E", "E", "E"],
-              ]
-            ),
+            level: levels[selectedLevel - 1],
             onGameOver: (){
               Future.delayed(const Duration(milliseconds: 500)).then((_){
                 gameOver = true;
@@ -228,3 +220,15 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
+
+/*
+Level(
+  data: [
+    ["E", "D", "E", "F", "E"],
+    ["E", "W", "L", "E", "E"],
+    ["E", "W", "E", "D", "E"],
+    ["E", "W", "+1", "E", "E"],
+    ["E", "B", "E", "E", "E"],
+  ]
+),
+ */
